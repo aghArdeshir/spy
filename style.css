@@ -1,0 +1,24 @@
+body {
+  padding: 0;
+  margin: 0;
+  min-height: 100vh;
+}
+
+* {
+  box-sizing: border-box;
+  font-size: 20px;
+}
+
+.start-page {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+.start-page button {
+  flex: 1;
+
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
