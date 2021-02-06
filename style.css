@@ -22,3 +22,15 @@ body {
   justify-content: space-around;
   align-items: center;
 }
+
+.set-players {
+  display: flex;
+  flex-wrap: wrap;
+  height: 100vh;
+}
+
+.set-players button {
+  min-width: 100px;
+
+  flex: 1;
+}

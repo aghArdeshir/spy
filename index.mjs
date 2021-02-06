@@ -1,25 +1,10 @@
 import { CATEGORIES } from "./categories.mjs";
+import { PAGES } from "./pages.mjs";
 
 let playersCount = 6;
 let spiesCount = 1;
 let durationInMinutes = 10;
 let category = CATEGORIES.places;
-
-function setPlayersCount(count) {
-  playersCount = count;
-}
-
-function setSpiesCount(count) {
-  spiesCount = count;
-}
-
-function setDurationInMinutes(duration) {
-  durationInMinutes = duration;
-}
-
-function setCategory(category) {
-  category = category;
-}
 
 function updatePlayersCountDom() {
   document.querySelector(
@@ -42,9 +27,57 @@ function updateCategoryDom() {
     category.name;
 }
 
+function setPlayersCount(count) {
+  playersCount = count;
+  updatePlayersCountDom();
+}
+
+function setSpiesCount(count) {
+  spiesCount = count;
+  updateSpiesCountDom();
+}
+
+function setDurationInMinutes(duration) {
+  durationInMinutes = duration;
+  updateDurationDom();
+}
+
+function setCategory(category) {
+  category = category;
+  updateCategoryDom();
+}
+
+function populateSetPlayersDom() {
+  for (let i = 0; i < 21; i++) {
+    const button = document.createElement("button");
+    button.innerText = i + 1;
+    button.onclick = function () {
+      setPlayersCount(i + 1);
+      showPage("start-page");
+    };
+    document.querySelector(".set-players").appendChild(button);
+  }
+}
+
+function showPage(pageClass) {
+  document.querySelector("." + PAGES.startPage).style.display = "none";
+  document.querySelector("." + PAGES.setPlayers).style.display = "none";
+  document.querySelector("." + PAGES.setSpies).style.display = "none";
+  document.querySelector("." + PAGES.setDuration).style.display = "none";
+  document.querySelector("." + PAGES.setCategory).style.display = "none";
+
+  document.querySelector("." + pageClass).style.display = "flex";
+}
+
 window.onload = function () {
   updatePlayersCountDom();
   updateSpiesCountDom();
   updateDurationDom();
   updateCategoryDom();
+
+  showPage(PAGES.startPage);
+
+  populateSetPlayersDom();
 };
+
+window.showPage = showPage;
