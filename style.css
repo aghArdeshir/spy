@@ -23,13 +23,17 @@ body {
   align-items: center;
 }
 
-.set-players {
+.set-players,
+.set-spies,
+.set-duration {
   display: flex;
   flex-wrap: wrap;
   height: 100vh;
 }
 
-.set-players button {
+.set-players button,
+.set-spies button,
+.set-duration button {
   min-width: 100px;
 
   flex: 1;

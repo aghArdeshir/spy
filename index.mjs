@@ -47,15 +47,15 @@ function setCategory(category) {
   updateCategoryDom();
 }
 
-function populateSetPlayersDom() {
+function populateCountPikcerDom(page, callback) {
   for (let i = 0; i < 21; i++) {
     const button = document.createElement("button");
     button.innerText = i + 1;
     button.onclick = function () {
-      setPlayersCount(i + 1);
+      callback(i + 1);
       showPage("start-page");
     };
-    document.querySelector(".set-players").appendChild(button);
+    document.querySelector("." + page).appendChild(button);
   }
 }
 
@@ -77,7 +77,9 @@ window.onload = function () {
 
   showPage(PAGES.startPage);
 
-  populateSetPlayersDom();
+  populateCountPikcerDom(PAGES.setPlayers, setPlayersCount);
+  populateCountPikcerDom(PAGES.setSpies, setSpiesCount);
+  populateCountPikcerDom(PAGES.setDuration, setDurationInMinutes);
 };
 
 window.showPage = showPage;
