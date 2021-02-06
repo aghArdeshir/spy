@@ -67,11 +67,17 @@ function populateCountPikcerDom(page, callback) {
   }
 }
 
+function chooseRandomWord() {
+  return CATEGORIES.sports.members[
+    Math.floor(Math.random() * CATEGORIES.sports.members.length)
+  ];
+}
+
 function populateAssignPlayersPage() {
   for (let i = 0; i < 100; i++) {
     Math.random(); // seeding random masalan
   }
-  const word = CATEGORIES.sports.members[0];
+  const word = chooseRandomWord();
 
   const assigners = new Set();
   const assignersIterator = assigners[Symbol.iterator]();
