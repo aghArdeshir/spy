@@ -2,9 +2,9 @@ import { Assigner } from "./Assigner.mjs";
 import { CATEGORIES } from "./categories.mjs";
 import { PAGES } from "./pages.mjs";
 
-let playersCount = 6;
-let spiesCount = 1;
-let durationInMinutes = 10;
+let playersCount = +localStorage.getItem("players") || 6;
+let spiesCount = +localStorage.getItem("spies") || 1;
+let durationInMinutes = +localStorage.getItem("duration") || 10;
 let category = CATEGORIES.places;
 
 function updatePlayersCountDom() {
@@ -30,16 +30,23 @@ function updateCategoryDom() {
 
 function setPlayersCount(count) {
   playersCount = count;
+  localStorage.setItem("players", count);
   updatePlayersCountDom();
 }
 
 function setSpiesCount(count) {
-  spiesCount = count;
+  if (count >= playersCount / 2) {
+    alert("Spies must be less than half of players.");
+  } else {
+    spiesCount = count;
+  }
+  localStorage.setItem("spies", count);
   updateSpiesCountDom();
 }
 
 function setDurationInMinutes(duration) {
   durationInMinutes = duration;
+  localStorage.setItem("duration", duration);
   updateDurationDom();
 }
 
