@@ -73,19 +73,32 @@ function chooseRandomWord() {
   ];
 }
 
-function populateAssignPlayersPage() {
+function seedRandom() {
   for (let i = 0; i < 100; i++) {
     Math.random(); // seeding random masalan
   }
+}
+
+function populateAssignPlayersPage() {
+  seedRandom();
   const word = chooseRandomWord();
 
   const assigners = new Set();
   const assignersIterator = assigners[Symbol.iterator]();
 
-  const spyIndex = Math.floor(Math.random() * playersCount);
+  const spyIndexes = [];
+
+  new Array(spiesCount).fill(1).forEach(() => {
+    seedRandom();
+    let index = Math.floor(Math.random() * playersCount);
+    while (spyIndexes.includes(index)) {
+      index = Math.floor(Math.random() * playersCount);
+    }
+    spyIndexes.push(index);
+  });
 
   new Array(playersCount).fill(1).forEach((_, index) => {
-    if (index === spyIndex) {
+    if (spyIndexes.includes(index)) {
       assigners.add(new Assigner(word, true, assignersIterator));
     } else {
       assigners.add(new Assigner(word, false, assignersIterator));
