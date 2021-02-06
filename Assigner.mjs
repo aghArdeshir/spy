@@ -31,7 +31,7 @@ export class Assigner {
     if (!this.isSpy) {
       paragraphDom.innerText = this.word;
     } else {
-      paragraphDom.innerText = "FUCKING SPY!!";
+      paragraphDom.innerText = "شما جاسوس هستید!!";
     }
 
     okButtonDom.onclick = () => {
