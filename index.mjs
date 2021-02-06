@@ -5,7 +5,7 @@ import { PAGES } from "./pages.mjs";
 let playersCount = +localStorage.getItem("players") || 6;
 let spiesCount = +localStorage.getItem("spies") || 1;
 let durationInMinutes = +localStorage.getItem("duration") || 10;
-let category = CATEGORIES.places;
+let category = CATEGORIES.sports;
 
 function updatePlayersCountDom() {
   document.querySelector(
@@ -71,7 +71,7 @@ function populateAssignPlayersPage() {
   for (let i = 0; i < 100; i++) {
     Math.random(); // seeding random masalan
   }
-  const word = CATEGORIES.places.members[0];
+  const word = CATEGORIES.sports.members[0];
 
   const assigners = new Set();
   const assignersIterator = assigners[Symbol.iterator]();
