@@ -1,3 +1,4 @@
+import { Assigner } from "./Assigner.mjs";
 import { CATEGORIES } from "./categories.mjs";
 import { PAGES } from "./pages.mjs";
 
@@ -59,14 +60,41 @@ function populateCountPikcerDom(page, callback) {
   }
 }
 
-function showPage(pageClass) {
+function populateAssignPlayersPage() {
+  for (let i = 0; i < 100; i++) {
+    Math.random(); // seeding random masalan
+  }
+  const word = CATEGORIES.places.members[0];
+
+  const assigners = new Set();
+  const assignersIterator = assigners[Symbol.iterator]();
+
+  const spyIndex = Math.floor(Math.random() * playersCount);
+
+  new Array(playersCount).fill(1).forEach((_, index) => {
+    if (index === spyIndex) {
+      assigners.add(new Assigner(word, true, assignersIterator));
+    } else {
+      assigners.add(new Assigner(word, false, assignersIterator));
+    }
+  });
+
+  assignersIterator.next().value.invoke();
+}
+
+function showPage(page) {
   document.querySelector("." + PAGES.startPage).style.display = "none";
   document.querySelector("." + PAGES.setPlayers).style.display = "none";
   document.querySelector("." + PAGES.setSpies).style.display = "none";
   document.querySelector("." + PAGES.setDuration).style.display = "none";
   document.querySelector("." + PAGES.setCategory).style.display = "none";
+  document.querySelector("." + PAGES.assignPlayers).style.display = "none";
 
-  document.querySelector("." + pageClass).style.display = "flex";
+  if (page === PAGES.assignPlayers) {
+    populateAssignPlayersPage();
+  }
+
+  document.querySelector("." + page).style.display = "flex";
 }
 
 window.onload = function () {
@@ -83,3 +111,7 @@ window.onload = function () {
 };
 
 window.showPage = showPage;
+
+window.showTimer = function () {
+  console.log("ok");
+};

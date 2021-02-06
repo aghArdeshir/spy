@@ -4,4 +4,6 @@ export const PAGES = {
   setSpies: "set-spies",
   setDuration: "set-duration",
   setCategory: "set-category",
+
+  assignPlayers: "assign-players",
 };
