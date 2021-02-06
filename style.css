@@ -52,3 +52,17 @@ body {
   min-width: 150px;
   min-height: 150px;
 }
+
+.timer-countdown {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  width: 100vw;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.timer-countdown button {
+  min-width: 150px;
+  min-height: 150px;
+}

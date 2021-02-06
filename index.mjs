@@ -82,6 +82,28 @@ function populateAssignPlayersPage() {
   assignersIterator.next().value.invoke();
 }
 
+function convertSecondsToTimer(durationCountdown) {
+  const minutes = Math.floor(durationCountdown / 60)
+    .toString()
+    .padStart(2, "0");
+  const seconds = (durationCountdown % 60).toString().padStart(2, "0");
+  return minutes + ":" + seconds;
+}
+
+function populateTimer() {
+  let durationCountdown = durationInMinutes * 60;
+  document.querySelector(
+    "." + PAGES.timerCountdown
+  ).children[0].innerText = convertSecondsToTimer(durationCountdown);
+
+  setInterval(() => {
+    durationCountdown--;
+    document.querySelector(
+      "." + PAGES.timerCountdown
+    ).children[0].innerText = convertSecondsToTimer(durationCountdown);
+  }, 1000);
+}
+
 function showPage(page) {
   document.querySelector("." + PAGES.startPage).style.display = "none";
   document.querySelector("." + PAGES.setPlayers).style.display = "none";
@@ -89,9 +111,14 @@ function showPage(page) {
   document.querySelector("." + PAGES.setDuration).style.display = "none";
   document.querySelector("." + PAGES.setCategory).style.display = "none";
   document.querySelector("." + PAGES.assignPlayers).style.display = "none";
+  document.querySelector("." + PAGES.timerCountdown).style.display = "none";
 
   if (page === PAGES.assignPlayers) {
     populateAssignPlayersPage();
+  }
+
+  if (page === PAGES.timerCountdown) {
+    populateTimer();
   }
 
   document.querySelector("." + page).style.display = "flex";
@@ -113,5 +140,9 @@ window.onload = function () {
 window.showPage = showPage;
 
 window.showTimer = function () {
-  console.log("ok");
+  showPage(PAGES.timerCountdown);
+};
+
+window.restart = function () {
+  window.location.reload();
 };

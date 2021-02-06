@@ -6,4 +6,5 @@ export const PAGES = {
   setCategory: "set-category",
 
   assignPlayers: "assign-players",
+  timerCountdown: "timer-countdown",
 };
