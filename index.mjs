@@ -92,9 +92,6 @@ function chooseRandomWord() {
 function populateAssignPlayersPage() {
   const word = chooseRandomWord();
 
-  const assigners = new Set();
-  const assignersIterator = assigners[Symbol.iterator]();
-
   const spyIndexes = [];
 
   new Array(spiesCount).fill(1).forEach(() => {
@@ -105,13 +102,21 @@ function populateAssignPlayersPage() {
     spyIndexes.push(index);
   });
 
+  const assignersSet = new Set();
+  const assignersIterator = assignersSet[Symbol.iterator]();
+
+  const assignersArray = [];
   new Array(playersCount).fill(1).forEach((_, index) => {
     if (spyIndexes.includes(index)) {
-      assigners.add(new Assigner(word, true, assignersIterator));
+      assignersArray.push(new Assigner(word, true, assignersIterator));
     } else {
-      assigners.add(new Assigner(word, false, assignersIterator));
+      assignersArray.push(new Assigner(word, false, assignersIterator));
     }
   });
+
+  randomizeMembers(assignersArray);
+
+  assignersArray.forEach((assigner) => assignersSet.add(assigner));
 
   assignersIterator.next().value.invoke();
 }
