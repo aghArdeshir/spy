@@ -5,7 +5,16 @@ import { PAGES } from "./pages.mjs";
 let playersCount = +localStorage.getItem("players") || 6;
 let spiesCount = +localStorage.getItem("spies") || 1;
 let durationInMinutes = +localStorage.getItem("duration") || 10;
-let category = CATEGORIES.sports;
+
+let category;
+const storedCategoryName = localStorage.getItem("category");
+if (storedCategoryName) {
+  category = Object.values(CATEGORIES).find(
+    (c) => c.name === storedCategoryName
+  );
+} else {
+  category = CATEGORIES.sports;
+}
 
 function updatePlayersCountDom() {
   document.querySelector(
@@ -50,8 +59,9 @@ function setDurationInMinutes(duration) {
   updateDurationDom();
 }
 
-function setCategory(category) {
-  category = category;
+function setCategory(selectedCategory) {
+  category = selectedCategory;
+  localStorage.setItem("category", selectedCategory.name);
   updateCategoryDom();
 }
 
@@ -132,6 +142,29 @@ function populateTimer() {
   }, 1000);
 }
 
+function populateCategoriesSelector() {
+  Object.keys(CATEGORIES).forEach((key) => {
+    const currentCategory = CATEGORIES[key];
+
+    const button = document.createElement("button");
+    button.innerText = currentCategory.name;
+    button.onclick = () => {
+      setCategory(currentCategory);
+      showPage(PAGES.startPage);
+    };
+
+    const p = document.createElement("p");
+    const members = currentCategory.members;
+    for (let i = 0; i < 100; i++) {
+      members.sort(() => (Math.random() > 0.5 ? -1 : 1));
+    }
+    p.innerText = members.slice(0, 40).join("، ") + "...";
+    button.appendChild(p);
+
+    document.querySelector(".set-category").appendChild(button);
+  });
+}
+
 function showPage(page) {
   document.querySelector("." + PAGES.startPage).style.display = "none";
   document.querySelector("." + PAGES.setPlayers).style.display = "none";
@@ -163,6 +196,7 @@ window.onload = function () {
   populateCountPikcerDom(PAGES.setPlayers, setPlayersCount);
   populateCountPikcerDom(PAGES.setSpies, setSpiesCount);
   populateCountPikcerDom(PAGES.setDuration, setDurationInMinutes);
+  populateCategoriesSelector();
 };
 
 window.showPage = showPage;
