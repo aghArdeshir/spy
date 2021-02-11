@@ -68,9 +68,11 @@ function populateCountPikcerDom(page, callback) {
 }
 
 function chooseRandomWord() {
-  return category.members[
-    Math.floor(Math.random() * category.members.length)
-  ];
+  const members = category.members.slice();
+  for (let i = 0; i < 100; i++) {
+    members.sort(() => (Math.random() > 0.5 ? -1 : 1));
+  }
+  return category.members[Math.floor(Math.random() * category.members.length)];
 }
 
 function seedRandom() {
