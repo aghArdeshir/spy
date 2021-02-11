@@ -68,8 +68,8 @@ function populateCountPikcerDom(page, callback) {
 }
 
 function chooseRandomWord() {
-  return CATEGORIES.sports.members[
-    Math.floor(Math.random() * CATEGORIES.sports.members.length)
+  return category.members[
+    Math.floor(Math.random() * category.members.length)
   ];
 }
 
