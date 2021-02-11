@@ -38,8 +38,12 @@ function updateCategoryDom() {
 }
 
 function setPlayersCount(count) {
-  playersCount = count;
-  localStorage.setItem("players", count);
+  if (count > spiesCount * 2) {
+    playersCount = count;
+    localStorage.setItem("players", count);
+  } else {
+    alert("Players must be more than twice the count of spies.");
+  }
   updatePlayersCountDom();
 }
 
@@ -48,8 +52,8 @@ function setSpiesCount(count) {
     alert("Spies must be less than half of players.");
   } else {
     spiesCount = count;
+    localStorage.setItem("spies", count);
   }
-  localStorage.setItem("spies", count);
   updateSpiesCountDom();
 }
 
