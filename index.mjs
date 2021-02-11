@@ -84,9 +84,35 @@ function randomizeMembers(members) {
 }
 
 function chooseRandomWord() {
-  const members = category.members.slice();
+  let alreadyChosenWords = [];
+  const storedAlreadyChosenWords = localStorage.getItem(
+    "chosen:" + category.name
+  );
+  if (storedAlreadyChosenWords) {
+    alreadyChosenWords = JSON.parse(storedAlreadyChosenWords);
+  }
+
+  let members = category.members
+    .slice()
+    .filter((member) => alreadyChosenWords.indexOf(member) === -1);
+
+  if (members.length === 0) {
+    members = category.members.slice();
+    alreadyChosenWords = [];
+    localStorage.removeItem("chosen:" + category.name);
+  }
+
   randomizeMembers(members);
-  return category.members[Math.floor(Math.random() * category.members.length)];
+
+  const result = members[Math.floor(Math.random() * members.length)];
+
+  alreadyChosenWords.push(result);
+  localStorage.setItem(
+    "chosen:" + category.name,
+    JSON.stringify(alreadyChosenWords)
+  );
+
+  return result;
 }
 
 function populateAssignPlayersPage() {
