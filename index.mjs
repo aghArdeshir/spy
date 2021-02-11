@@ -2,6 +2,8 @@ import { Assigner } from "./Assigner.mjs";
 import { CATEGORIES } from "./categories.mjs";
 import { PAGES } from "./pages.mjs";
 
+const ONE_SECOND = 1000;
+
 let playersCount = +localStorage.getItem("players") || 6;
 let spiesCount = +localStorage.getItem("spies") || 1;
 let durationInMinutes = +localStorage.getItem("duration") || 10;
@@ -75,46 +77,47 @@ function populateCountPikcerDom(page, callback) {
     button.innerText = i + 1;
     button.onclick = function () {
       callback(i + 1);
-      showPage("start-page");
+      showPage(PAGES.startPage);
     };
     document.querySelector("." + page).appendChild(button);
   }
 }
 
-function randomizeMembers(members) {
+function shuffleArray(members) {
   for (let i = 0; i < 100; i++) {
     members.sort(() => (Math.random() > 0.5 ? -1 : 1));
   }
 }
 
+function randomNumber(ceil) {
+  return Math.floor(Math.random() * ceil);
+}
+
 function chooseRandomWord() {
+  const localStorageKey = "chosen:" + category.name;
+
   let alreadyChosenWords = [];
-  const storedAlreadyChosenWords = localStorage.getItem(
-    "chosen:" + category.name
-  );
+  const storedAlreadyChosenWords = localStorage.getItem(localStorageKey);
   if (storedAlreadyChosenWords) {
     alreadyChosenWords = JSON.parse(storedAlreadyChosenWords);
   }
 
   let members = category.members
     .slice()
-    .filter((member) => alreadyChosenWords.indexOf(member) === -1);
+    .filter((member) => !alreadyChosenWords.includes(member));
 
   if (members.length === 0) {
     members = category.members.slice();
     alreadyChosenWords = [];
-    localStorage.removeItem("chosen:" + category.name);
+    localStorage.removeItem(localStorageKey);
   }
 
-  randomizeMembers(members);
+  shuffleArray(members);
 
-  const result = members[Math.floor(Math.random() * members.length)];
+  const result = members[randomNumber(members.length)];
 
   alreadyChosenWords.push(result);
-  localStorage.setItem(
-    "chosen:" + category.name,
-    JSON.stringify(alreadyChosenWords)
-  );
+  localStorage.setItem(localStorageKey, JSON.stringify(alreadyChosenWords));
 
   return result;
 }
@@ -125,17 +128,17 @@ function populateAssignPlayersPage() {
   const spyIndexes = [];
 
   new Array(spiesCount).fill(1).forEach(() => {
-    let index = Math.floor(Math.random() * playersCount);
+    let index = randomNumber(playersCount);
     while (spyIndexes.includes(index)) {
-      index = Math.floor(Math.random() * playersCount);
+      index = randomNumber(playersCount);
     }
     spyIndexes.push(index);
   });
 
+  const assignersArray = [];
   const assignersSet = new Set();
   const assignersIterator = assignersSet[Symbol.iterator]();
 
-  const assignersArray = [];
   new Array(playersCount).fill(1).forEach((_, index) => {
     if (spyIndexes.includes(index)) {
       assignersArray.push(new Assigner(word, true, assignersIterator));
@@ -144,10 +147,9 @@ function populateAssignPlayersPage() {
     }
   });
 
-  randomizeMembers(assignersArray);
+  shuffleArray(assignersArray);
 
   assignersArray.forEach((assigner) => assignersSet.add(assigner));
-
   assignersIterator.next().value.invoke();
 }
 
@@ -160,39 +162,41 @@ function convertSecondsToTimer(durationCountdown) {
 }
 
 function populateTimer() {
-  let durationCountdown = durationInMinutes * 60;
-  document.querySelector(
-    "." + PAGES.timerCountdown
-  ).children[0].innerText = convertSecondsToTimer(durationCountdown);
+  const timerDom = document.querySelector("." + PAGES.timerCountdown)
+    .children[0];
+
+  let durationInSeconds = durationInMinutes * 60;
+  timerDom.innerText = convertSecondsToTimer(durationInSeconds);
 
   setInterval(() => {
-    durationCountdown--;
-    document.querySelector(
-      "." + PAGES.timerCountdown
-    ).children[0].innerText = convertSecondsToTimer(durationCountdown);
-  }, 1000);
+    durationInSeconds--;
+    timerDom.innerText = convertSecondsToTimer(durationInSeconds);
+  }, ONE_SECOND);
 }
 
 function populateCategoriesSelector() {
-  document.querySelector("." + PAGES.setCategory).innerHTML = "";
+  const categoriesDom = document.querySelector("." + PAGES.setCategory);
+  categoriesDom.innerHTML = "";
 
   Object.keys(CATEGORIES).forEach((key) => {
-    const currentCategory = CATEGORIES[key];
+    const intendedCaetgory = CATEGORIES[key];
 
     const button = document.createElement("button");
-    button.innerText = currentCategory.name;
+    button.innerText = intendedCaetgory.name;
     button.onclick = () => {
-      setCategory(currentCategory);
+      setCategory(intendedCaetgory);
       showPage(PAGES.startPage);
     };
 
     const p = document.createElement("p");
-    const members = currentCategory.members;
-    randomizeMembers(members);
-    p.innerText = members.slice(0, 40).join("، ") + "...";
+
+    const intendedCategoryMembers = intendedCaetgory.members;
+    shuffleArray(intendedCategoryMembers);
+    p.innerText = intendedCategoryMembers.slice(0, 40).join("، ") + "...";
+
     button.appendChild(p);
 
-    document.querySelector("." + PAGES.setCategory).appendChild(button);
+    categoriesDom.appendChild(button);
   });
 }
 

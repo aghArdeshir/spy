@@ -34,9 +34,7 @@ body {
 .set-players button,
 .set-spies button,
 .set-duration button {
-  min-width: 100px;
-
-  flex: 1;
+  flex: 33%;
 }
 
 .assign-players .assigner {
