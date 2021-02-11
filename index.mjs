@@ -77,22 +77,19 @@ function populateCountPikcerDom(page, callback) {
   }
 }
 
-function chooseRandomWord() {
-  const members = category.members.slice();
+function randomizeMembers(members) {
   for (let i = 0; i < 100; i++) {
     members.sort(() => (Math.random() > 0.5 ? -1 : 1));
   }
+}
+
+function chooseRandomWord() {
+  const members = category.members.slice();
+  randomizeMembers(members);
   return category.members[Math.floor(Math.random() * category.members.length)];
 }
 
-function seedRandom() {
-  for (let i = 0; i < 100; i++) {
-    Math.random(); // seeding random masalan
-  }
-}
-
 function populateAssignPlayersPage() {
-  seedRandom();
   const word = chooseRandomWord();
 
   const assigners = new Set();
@@ -101,7 +98,6 @@ function populateAssignPlayersPage() {
   const spyIndexes = [];
 
   new Array(spiesCount).fill(1).forEach(() => {
-    seedRandom();
     let index = Math.floor(Math.random() * playersCount);
     while (spyIndexes.includes(index)) {
       index = Math.floor(Math.random() * playersCount);
@@ -143,6 +139,8 @@ function populateTimer() {
 }
 
 function populateCategoriesSelector() {
+  document.querySelector("." + PAGES.setCategory).innerHTML = "";
+
   Object.keys(CATEGORIES).forEach((key) => {
     const currentCategory = CATEGORIES[key];
 
@@ -155,13 +153,11 @@ function populateCategoriesSelector() {
 
     const p = document.createElement("p");
     const members = currentCategory.members;
-    for (let i = 0; i < 100; i++) {
-      members.sort(() => (Math.random() > 0.5 ? -1 : 1));
-    }
+    randomizeMembers(members);
     p.innerText = members.slice(0, 40).join("، ") + "...";
     button.appendChild(p);
 
-    document.querySelector(".set-category").appendChild(button);
+    document.querySelector("." + PAGES.setCategory).appendChild(button);
   });
 }
 
@@ -182,6 +178,10 @@ function showPage(page) {
     populateTimer();
   }
 
+  if (page === PAGES.setCategory) {
+    populateCategoriesSelector();
+  }
+
   document.querySelector("." + page).style.display = "flex";
 }
 
@@ -196,7 +196,6 @@ window.onload = function () {
   populateCountPikcerDom(PAGES.setPlayers, setPlayersCount);
   populateCountPikcerDom(PAGES.setSpies, setSpiesCount);
   populateCountPikcerDom(PAGES.setDuration, setDurationInMinutes);
-  populateCategoriesSelector();
 };
 
 window.showPage = showPage;
