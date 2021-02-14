@@ -14,7 +14,8 @@ if (storedCategoryName) {
   category = Object.values(CATEGORIES).find(
     (c) => c.name === storedCategoryName
   );
-} else {
+}
+if (!category) {
   category = CATEGORIES.sports;
 }
 
