@@ -199,6 +199,19 @@ function populateCategoriesSelector() {
 
     categoriesDom.appendChild(button);
   });
+
+  const contributeLink = document.createElement("a");
+  contributeLink.target = "_blank";
+  contributeLink.href =
+    "https://github.com/Ardeshir81/spy/blob/main/categories.mjs";
+  contributeLink.style.width = "100%";
+
+  const contributeButton = document.createElement("button");
+  contributeButton.innerText = "Contribute 🔗";
+  contributeButton.style.width = "100%";
+
+  contributeLink.appendChild(contributeButton);
+  categoriesDom.appendChild(contributeLink);
 }
 
 function showPage(page) {
