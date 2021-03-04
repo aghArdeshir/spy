@@ -8,12 +8,15 @@ body {
 
 html {
   background-color: white;
-  transition: all 0.2s;
 }
 
-html.dark {
-  filter: invert(100%) hue-rotate(180deg);
-  background-color: black;
+html.dark,
+html.dark * {
+  background-color: black !important;
+  color: gold !important;
+}
+html.dark button {
+  border: 1px solid gold;
 }
 
 * {
