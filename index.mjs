@@ -7,6 +7,7 @@ const ONE_SECOND = 1000;
 let playersCount = +localStorage.getItem("players") || 6;
 let spiesCount = +localStorage.getItem("spies") || 1;
 let durationInMinutes = +localStorage.getItem("duration") || 10;
+let theme = localStorage.getItem("theme") || "light";
 
 let category;
 const storedCategoryName = localStorage.getItem("category");
@@ -40,6 +41,16 @@ function updateCategoryDom() {
     category.name;
 }
 
+function updateThemeDeom() {
+  document.querySelector("#theme-button").children[1].innerHTML = theme;
+
+  if (theme === "light") {
+    document.body.parentElement.classList.remove("dark");
+  } else {
+    document.body.parentElement.classList.add("dark");
+  }
+}
+
 function setPlayersCount(count) {
   if (count > spiesCount * 2) {
     playersCount = count;
@@ -71,6 +82,13 @@ function setCategory(selectedCategory) {
   localStorage.setItem("category", selectedCategory.name);
   updateCategoryDom();
 }
+
+function switchTheme() {
+  theme = theme === "light" ? "dark" : "light";
+  localStorage.setItem("theme", theme);
+  updateThemeDeom();
+}
+window.switchTheme = switchTheme;
 
 function populateCountPikcerDom(page, callback) {
   for (let i = 0; i < 21; i++) {
@@ -257,6 +275,10 @@ function populateFirstPage() {
             <div>Category</div>
             <div></div>
         </button>
+        <button id="theme-button" onClick="switchTheme()">
+            <div>Theme</div>
+            <div></div>
+        </button>
         <button id="start-button" onclick="showPage('assign-players')">
             <div>Start</div>
             <div>⎆</div>
@@ -285,6 +307,7 @@ window.onload = function () {
   updateSpiesCountDom();
   updateDurationDom();
   updateCategoryDom();
+  updateThemeDeom();
 
   showPage(PAGES.startPage);
 

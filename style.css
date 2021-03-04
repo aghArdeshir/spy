@@ -6,6 +6,11 @@ body {
   margin: auto;
 }
 
+html.dark {
+  background-color: black;
+  filter: invert(100%) hue-rotate(180deg);
+}
+
 * {
   box-sizing: border-box;
   font-size: 20px;
