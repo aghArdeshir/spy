@@ -7,8 +7,7 @@ const ONE_SECOND = 1000;
 let playersCount = +localStorage.getItem("spy-players") || 6;
 let spiesCount = +localStorage.getItem("spy-spies") || 1;
 let durationInMinutes = +localStorage.getItem("spy-duration") || 10;
-// let theme = localStorage.getItem("spy-theme") || "light";
-let theme = "light";
+let theme = localStorage.getItem("spy-theme") || "light";
 
 let category;
 const storedCategoryName = localStorage.getItem("spy-category");
@@ -43,6 +42,8 @@ function updateCategoryDom() {
 }
 
 function updateThemeDeom() {
+  document.querySelector("#theme-button").children[1].innerHTML = theme;
+
   if (theme === "light") {
     document.body.parentElement.classList.remove("dark");
   } else {
