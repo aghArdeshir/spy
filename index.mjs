@@ -4,13 +4,13 @@ import { PAGES } from "./pages.mjs";
 
 const ONE_SECOND = 1000;
 
-let playersCount = +localStorage.getItem("players") || 6;
-let spiesCount = +localStorage.getItem("spies") || 1;
-let durationInMinutes = +localStorage.getItem("duration") || 10;
-let theme = localStorage.getItem("theme") || "light";
+let playersCount = +localStorage.getItem("spy-players") || 6;
+let spiesCount = +localStorage.getItem("spy-spies") || 1;
+let durationInMinutes = +localStorage.getItem("spy-duration") || 10;
+let theme = localStorage.getItem("spy-theme") || "light";
 
 let category;
-const storedCategoryName = localStorage.getItem("category");
+const storedCategoryName = localStorage.getItem("spy-category");
 if (storedCategoryName) {
   category = Object.values(CATEGORIES).find(
     (c) => c.name === storedCategoryName
@@ -54,7 +54,7 @@ function updateThemeDeom() {
 function setPlayersCount(count) {
   if (count > spiesCount * 2) {
     playersCount = count;
-    localStorage.setItem("players", count);
+    localStorage.setItem("spy-players", count);
   } else {
     alert("Players must be more than twice the count of spies.");
   }
@@ -66,26 +66,26 @@ function setSpiesCount(count) {
     alert("Spies must be less than half of players.");
   } else {
     spiesCount = count;
-    localStorage.setItem("spies", count);
+    localStorage.setItem("spy-spies", count);
   }
   updateSpiesCountDom();
 }
 
 function setDurationInMinutes(duration) {
   durationInMinutes = duration;
-  localStorage.setItem("duration", duration);
+  localStorage.setItem("spy-duration", duration);
   updateDurationDom();
 }
 
 function setCategory(selectedCategory) {
   category = selectedCategory;
-  localStorage.setItem("category", selectedCategory.name);
+  localStorage.setItem("spy-category", selectedCategory.name);
   updateCategoryDom();
 }
 
 function switchTheme() {
   theme = theme === "light" ? "dark" : "light";
-  localStorage.setItem("theme", theme);
+  localStorage.setItem("spy-theme", theme);
   updateThemeDeom();
 }
 window.switchTheme = switchTheme;
@@ -113,7 +113,7 @@ function randomNumber(ceil) {
 }
 
 function chooseRandomWord() {
-  const localStorageKey = "chosen:" + category.name;
+  const localStorageKey = "spy-chosen:" + category.name;
 
   let alreadyChosenWords = [];
   const storedAlreadyChosenWords = localStorage.getItem(localStorageKey);
