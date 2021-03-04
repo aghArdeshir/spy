@@ -43,8 +43,6 @@ function updateCategoryDom() {
 }
 
 function updateThemeDeom() {
-  document.querySelector("#theme-button").children[1].innerHTML = theme;
-
   if (theme === "light") {
     document.body.parentElement.classList.remove("dark");
   } else {
