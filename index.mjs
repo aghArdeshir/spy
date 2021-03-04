@@ -41,8 +41,8 @@ function updateCategoryDom() {
     category.name;
 }
 
-function updateThemeDeom() {
-  document.querySelector("#theme-button").children[1].innerHTML = theme;
+function updateThemeDom() {
+  document.querySelector("#theme-button").children[1].innerText = theme;
 
   if (theme === "light") {
     document.body.parentElement.classList.remove("dark");
@@ -86,7 +86,7 @@ function setCategory(selectedCategory) {
 function switchTheme() {
   theme = theme === "light" ? "dark" : "light";
   localStorage.setItem("spy-theme", theme);
-  updateThemeDeom();
+  updateThemeDom();
 }
 window.switchTheme = switchTheme;
 
@@ -261,7 +261,7 @@ window.onload = function () {
   updateSpiesCountDom();
   updateDurationDom();
   updateCategoryDom();
-  updateThemeDeom();
+  updateThemeDom();
 
   showPage(PAGES.startPage);
 
