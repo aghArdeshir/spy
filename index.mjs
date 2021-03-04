@@ -256,7 +256,9 @@ function showPage(page) {
   document.querySelector("." + page).style.display = "flex";
 }
 
+let firstTimeHtml = "";
 window.onload = function () {
+  firstTimeHtml = document.body.innerHTML;
   updatePlayersCountDom();
   updateSpiesCountDom();
   updateDurationDom();
@@ -277,5 +279,6 @@ window.showTimer = function () {
 };
 
 window.restart = function () {
-  window.location.reload();
+  document.body.innerHTML = firstTimeHtml;
+  window.onload();
 };
