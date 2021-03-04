@@ -257,48 +257,47 @@ function showPage(page) {
 }
 
 function populateFirstPage() {
-  document.body.innerHTML = `
-    <div class="start-page">
-        <button id="players-button" onclick="showPage('set-players')">
-            <div>Players</div>
-            <div></div>
-        </button>
-        <button id="spies-button" onclick="showPage('set-spies')">
-            <div>Spies</div>
-            <div></div>
-        </button>
-        <button id="duration-button" onclick="showPage('set-duration')">
-            <div>Duration</div>
-            <div></div>
-        </button>
-        <button id="category-button" onclick="showPage('set-category')">
-            <div>Category</div>
-            <div></div>
-        </button>
-        <button id="theme-button" onClick="switchTheme()">
-            <div>Theme</div>
-            <div></div>
-        </button>
-        <button id="start-button" onclick="showPage('assign-players')">
-            <div>Start</div>
-            <div>⎆</div>
-        </button>
-    </div>
-
-    <div class="set-players"></div>
-    <div class="set-spies"></div>
-    <div class="set-duration"></div>
-    <div class="set-category"></div>
-
-    <div class="assign-players"></div>
-
-    <div class="timer-countdown">
-        <p></p>
-        <button onclick="restart()">RE-START</button>
-    </div>
-
-    <script type="module" src="index.mjs"></script>
-    `;
+  document.body.innerHTML =
+    '<div class="start-page">' +
+    '    <button id="players-button" onclick="showPage(\'set-players\')">' +
+    "        <div>Players</div>" +
+    "        <div></div>" +
+    "    </button>" +
+    '    <button id="spies-button" onclick="showPage(\'set-spies\')">' +
+    "        <div>Spies</div>" +
+    "        <div></div>" +
+    "    </button>" +
+    '    <button id="duration-button" onclick="showPage(\'set-duration\')">' +
+    "        <div>Duration</div>" +
+    "        <div></div>" +
+    "    </button>" +
+    '    <button id="category-button" onclick="showPage(\'set-category\')">' +
+    "        <div>Category</div>" +
+    "        <div></div>" +
+    "    </button>" +
+    '    <button id="theme-button" onClick="switchTheme()">' +
+    "        <div>Theme</div>" +
+    "        <div></div>" +
+    "    </button>" +
+    '    <button id="start-button" onclick="showPage(\'assign-players\')">' +
+    "        <div>Start</div>" +
+    "        <div>⎆</div>" +
+    "    </button>" +
+    "</div>" +
+    "" +
+    '<div class="set-players"></div>' +
+    '<div class="set-spies"></div>' +
+    '<div class="set-duration"></div>' +
+    '<div class="set-category"></div>' +
+    "" +
+    '<div class="assign-players"></div>' +
+    "" +
+    '<div class="timer-countdown">' +
+    "    <p></p>" +
+    '    <button onclick="restart()">RE-START</button>' +
+    "</div>" +
+    "" +
+    '<script type="module" src="index.mjs"></script>';
 }
 
 window.onload = function () {
