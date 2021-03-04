@@ -301,7 +301,6 @@ function populateFirstPage() {
 }
 
 window.onload = function () {
-  populateFirstPage();
   updatePlayersCountDom();
   updateSpiesCountDom();
   updateDurationDom();
@@ -322,5 +321,6 @@ window.showTimer = function () {
 };
 
 window.restart = function () {
+  populateFirstPage();
   window.onload();
 };
