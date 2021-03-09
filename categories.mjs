@@ -1,7 +1,7 @@
 export const CATEGORIES = {
   jobs: {
     name: "مشاغل",
-    membres: [
+    members: [
       [
         "مهندس برق",
         "مهندس معماری",
