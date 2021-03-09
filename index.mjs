@@ -204,12 +204,20 @@ function convertSecondsToTimer(durationCountdown) {
 }
 
 let intervalRef;
+let durationInSeconds;
 function populateTimer() {
   const timerDom = document.querySelector("." + PAGES.timerCountdown)
     .children[0];
 
-  let durationInSeconds = 4;
+  durationInSeconds = durationInMinutes * 60;
   timerDom.innerText = convertSecondsToTimer(durationInSeconds);
+
+  resumeTimer();
+}
+
+function resumeTimer() {
+  const timerDom = document.querySelector("." + PAGES.timerCountdown)
+    .children[0];
 
   intervalRef = setInterval(() => {
     durationInSeconds--;
@@ -228,6 +236,10 @@ function populateTimer() {
       }, 1000);
     }
   }, ONE_SECOND);
+}
+
+function pauseTimer() {
+  clearInterval(intervalRef);
 }
 
 function populateCategoriesSelector() {
@@ -313,6 +325,17 @@ window.showPage = showPage;
 
 window.showTimer = function () {
   showPage(PAGES.timerCountdown);
+};
+
+window.toggleTimer = function () {
+  const timerToggler = document.querySelector("#timer-toggler");
+  if (timerToggler.textContent === "Pause Timer") {
+    pauseTimer();
+    timerToggler.textContent = "Resume Timer";
+  } else {
+    resumeTimer();
+    timerToggler.textContent = "Pause Timer";
+  }
 };
 
 window.restart = function () {
