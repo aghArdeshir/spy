@@ -260,7 +260,7 @@ function populateCategoriesSelector() {
 
     const intendedCategoryMembers = intendedCaetgory.members;
     shuffleArray(intendedCategoryMembers);
-    p.innerText = intendedCategoryMembers.slice(0, 40).join("، ") + "...";
+    p.innerText = intendedCategoryMembers.slice(0, 20).join("، ") + "...";
 
     button.appendChild(p);
 
