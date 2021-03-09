@@ -3,6 +3,29 @@ import { CATEGORIES } from "./categories.mjs";
 import { PAGES } from "./pages.mjs";
 
 const ONE_SECOND = 1000;
+const ANIMAL_SOUNDS = [
+  "buffalo",
+  "camel",
+  "cat",
+  "chicken",
+  "crow",
+  "dog",
+  "duck",
+  "elephant",
+  "falcon",
+  "frog",
+  "horse",
+  "lion",
+  "moose",
+  "otter",
+  "owl",
+  "raccoon",
+  "robin",
+  "sheep",
+  "tiger",
+  "wolf",
+  "zebra",
+];
 
 let playersCount = +localStorage.getItem("spy-players") || 6;
 let spiesCount = +localStorage.getItem("spy-spies") || 1;
@@ -180,16 +203,30 @@ function convertSecondsToTimer(durationCountdown) {
   return minutes + ":" + seconds;
 }
 
+let intervalRef;
 function populateTimer() {
   const timerDom = document.querySelector("." + PAGES.timerCountdown)
     .children[0];
 
-  let durationInSeconds = durationInMinutes * 60;
+  let durationInSeconds = 4;
   timerDom.innerText = convertSecondsToTimer(durationInSeconds);
 
-  setInterval(() => {
+  intervalRef = setInterval(() => {
     durationInSeconds--;
     timerDom.innerText = convertSecondsToTimer(durationInSeconds);
+
+    if (durationInSeconds === 0) {
+      clearInterval(intervalRef);
+      const animal = ANIMAL_SOUNDS[randomNumber(ANIMAL_SOUNDS.length)];
+      const finishAudio = new Audio("./animal-sounds/" + animal + ".mp3");
+      setTimeout(() => {
+        timerDom.innerText =
+          "spy is a " +
+          animal[0].toUpperCase() +
+          animal.substring(1, animal.length);
+        finishAudio.play();
+      }, 1000);
+    }
   }, ONE_SECOND);
 }
 
@@ -279,6 +316,7 @@ window.showTimer = function () {
 };
 
 window.restart = function () {
+  if (intervalRef) clearInterval(intervalRef);
   document.body.innerHTML = firstTimeHtml;
   window.onload();
 };
