@@ -6,6 +6,7 @@ window.addEventListener("load", () => {
 
 let deferredPrompt;
 window.addEventListener("beforeinstallprompt", (e) => {
+  alert("app is installable");
   e.preventDefault();
   deferredPrompt = e;
   alert("app is installable");
