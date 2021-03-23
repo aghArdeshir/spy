@@ -1,0 +1,53 @@
+{
+  "short_name": "SPY! 🕵",
+  "name": "Spy: There is a spy among any group of people!",
+  "icons": [
+    {
+      "src": "/images/icons-192.png",
+      "type": "image/png",
+      "sizes": "192x192"
+    },
+    {
+      "src": "/images/icons-512.png",
+      "type": "image/png",
+      "sizes": "512x512"
+    }
+  ],
+  "start_url": "/",
+  "background_color": " #000000",
+  "display": "standalone",
+  "theme_color": "#ffd700",
+  "shortcuts": [
+    {
+      "name": "Play SPY! 🕵",
+      "short_name": "SPY! 🕵",
+      "description": "Spy: There is a spy among any group of people!",
+      "url": "/",
+      "icons": [
+        {
+          "src": "/images/icons-512.png",
+          "type": "image/png",
+          "sizes": "512x512"
+        }
+      ]
+    }
+  ],
+  "description": "Spy: There is a spy among any group of people!",
+  "screenshots": [
+    {
+      "src": "/images/spy-screenshot1-600x1233.png",
+      "type": "image/png",
+      "sizes": "600x1233"
+    },
+    {
+      "src": "/images/spy-screenshot2-600x1233.png",
+      "type": "image/png",
+      "sizes": "600x1233"
+    },
+    {
+      "src": "/images/spy-screenshot3-600x1233.png",
+      "type": "image/png",
+      "sizes": "600x1233"
+    }
+  ]
+}

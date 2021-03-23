@@ -4,7 +4,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#ffd700" />
     <link rel="stylesheet" type="text/css" href="style.css" />
+    <link rel="manifest" href="/manifest.json" />
     <title>SPY! 🕵</title>
 </head>
 
@@ -34,6 +36,10 @@
             <div>Start</div>
             <div>⎆</div>
         </button>
+        <button id="install-button">
+            <div>Install</div>
+            <div>(~1MB, Easy-Install)</div>
+        </button>
     </div>
     <div class="set-players"></div>
     <div class="set-spies"></div>
@@ -47,6 +53,7 @@
     </div>
 
     <script type="module" src="index.mjs"></script>
+    <script type="module" src="service-worker-loader.mjs"></script>
 </body>
 
 </html>
