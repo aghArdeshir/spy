@@ -16,9 +16,13 @@ window.addEventListener("load", () => {
   alert("window loaded event");
   const installButton = document.querySelector("#install-button");
   installButton.addEventListener("click", async () => {
-    deferredPrompt.prompt();
-    const { outcome } = await deferredPrompt.userChoice;
-    alert("user choice: " + outcome);
+    if (deferredPrompt) {
+      deferredPrompt.prompt();
+      const { outcome } = await deferredPrompt.userChoice;
+      alert("user choice: " + outcome);
+    } else {
+      alert ('no `beforeinstallprompt`')
+    }
     deferredPrompt = null;
   });
 });
