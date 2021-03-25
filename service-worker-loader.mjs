@@ -21,7 +21,7 @@ window.addEventListener("load", () => {
       const { outcome } = await deferredPrompt.userChoice;
       alert("user choice: " + outcome);
     } else {
-      alert ('no `beforeinstallprompt`')
+      alert('no `beforeinstallprompt`')
     }
     deferredPrompt = null;
   });

@@ -14,7 +14,7 @@
     }
   ],
   "start_url": "/",
-  "background_color": " #000000",
+  "background_color": "#ffd700",
   "display": "standalone",
   "theme_color": "#ffd700",
   "shortcuts": [
