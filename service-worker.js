@@ -2,7 +2,11 @@ const OFFLINE_VERSION = 1;
 const CACHE_NAME = "offline";
 const OFFLINE_URL = "offline.html";
 
+console.log('service worker running')
+
 self.addEventListener("install", (event) => {
+  alert('service worker installed')
+  console.log('service worker installed')
   event.waitUntil(async () => {
     const cache = await caches.open(CACHE_NAME);
     await cache.add(new Request(OFFLINE_URL, { cache: "reload" }));

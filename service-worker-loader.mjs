@@ -1,6 +1,7 @@
 window.addEventListener("load", () => {
   if ("serviceWorker" in navigator) {
-    navigator.serviceWorker.register("service-worker.js");
+    console.log('---registering')
+    navigator.serviceWorker.register("service-worker.js").then(console.error).catch(console.warn);
   }
 });
 
@@ -13,7 +14,6 @@ window.addEventListener("beforeinstallprompt", (e) => {
 });
 
 window.addEventListener("load", () => {
-  alert("window loaded event");
   const installButton = document.querySelector("#install-button");
   installButton.addEventListener("click", async () => {
     if (deferredPrompt) {
