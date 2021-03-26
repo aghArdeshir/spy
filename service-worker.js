@@ -2,11 +2,10 @@ const OFFLINE_VERSION = 1;
 const CACHE_NAME = "offline";
 const OFFLINE_URL = "offline.html";
 
-console.log('service worker running')
+console.log('service worker running2')
 
 self.addEventListener("install", (event) => {
-  alert('service worker installed')
-  console.log('service worker installed')
+  console.log('install event')
   event.waitUntil(async () => {
     const cache = await caches.open(CACHE_NAME);
     await cache.add(new Request(OFFLINE_URL, { cache: "reload" }));
@@ -16,6 +15,7 @@ self.addEventListener("install", (event) => {
 });
 
 self.addEventListener("activate", (event) => {
+  console.log('activate event')
   event.waitUntil(
     (async () => {
       if ("navigationPreload" in self.registration) {
@@ -28,6 +28,7 @@ self.addEventListener("activate", (event) => {
 });
 
 self.addEventListener("fetch", (event) => {
+  console.log('fetch event')
   if (event.request.mode === "navigate") {
     event.respondWith(
       (async () => {
