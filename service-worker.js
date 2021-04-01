@@ -1,12 +1,26 @@
 const OFFLINE_VERSION = 1;
 const CACHE_NAME = "offline";
-const OFFLINE_URL = "offline.html";
+
+const all_paths = [
+  "/",
+  "/style.css",
+  "/index.mjs",
+  "/service-worker-loader.mjs",
+  "/Assigner.mjs",
+  "/categories.mjs",
+  "/pages.mjs",
+  "/favicon.ico",
+];
 
 self.addEventListener("install", (event) => {
-  event.waitUntil(async () => {
-    const cache = await caches.open(CACHE_NAME);
-    await cache.add(new Request(OFFLINE_URL, { cache: "reload" }));
-  });
+  event.waitUntil(
+    (async () => {
+      const cache = await caches.open(CACHE_NAME);
+      for (path of all_paths) {
+        await cache.add(new Request(path), { cache: "reload" });
+      }
+    })()
+  );
 
   self.skipWaiting();
 });
@@ -37,17 +51,24 @@ self.addEventListener("fetch", (event) => {
           return networkResponse;
         } catch (error) {
           console.error("Fetch failed; returning offline page instead");
+          console.error("for this event -> ", event);
           console.error(error);
 
           const cache = await caches.open(CACHE_NAME);
-          const cachedResponse = await cache.match(OFFLINE_URL);
+          const url = event.request.url.split("/")[3];
+          const cachedResponse = await cache.match("/" + url);
           return cachedResponse;
         }
       })()
     );
+  } else {
+    event.respondWith(
+      (async () => {
+        const cache = await caches.open(CACHE_NAME);
+        const url = event.request.url.split("/")[3];
+        const cachedResponse = await cache.match("/" + url);
+        return cachedResponse;
+      })()
+    );
   }
 });
-
-setInterval(() => {
-  console.log(new Date());
-}, 1000);
