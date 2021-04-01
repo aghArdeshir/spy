@@ -37,6 +37,20 @@ self.addEventListener("activate", (event) => {
   self.clients.claim();
 });
 
+const theSelf = self;
+function setupOfflineLoader() {
+  theSelf.addEventListener("fetch", (event) => {
+    event.respondWith(
+      (async () => {
+        const cache = await caches.open(CACHE_NAME);
+        const url = event.request.url.split("/")[3];
+        const cachedResponse = await cache.match("/" + url);
+        return cachedResponse;
+      })()
+    );
+  });
+}
+
 self.addEventListener("fetch", (event) => {
   if (event.request.mode === "navigate") {
     event.respondWith(
@@ -54,20 +68,13 @@ self.addEventListener("fetch", (event) => {
           console.error("for this event -> ", event);
           console.error(error);
 
+          setupOfflineLoader();
+
           const cache = await caches.open(CACHE_NAME);
           const url = event.request.url.split("/")[3];
           const cachedResponse = await cache.match("/" + url);
           return cachedResponse;
         }
-      })()
-    );
-  } else {
-    event.respondWith(
-      (async () => {
-        const cache = await caches.open(CACHE_NAME);
-        const url = event.request.url.split("/")[3];
-        const cachedResponse = await cache.match("/" + url);
-        return cachedResponse;
       })()
     );
   }
