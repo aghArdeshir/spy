@@ -1,16 +1,18 @@
 window.addEventListener("load", () => {
   if ("serviceWorker" in navigator) {
-    console.log('---registering')
-    navigator.serviceWorker.register("service-worker.js").then(console.error).catch(console.warn);
+    navigator.serviceWorker
+      .register("service-worker.js")
+      .then(() => {
+        console.log("service worker registered successfully");
+      })
+      .catch(console.error);
   }
 });
 
 let deferredPrompt;
 window.addEventListener("beforeinstallprompt", (e) => {
-  alert("app is installable");
   e.preventDefault();
   deferredPrompt = e;
-  alert("app is installable");
 });
 
 window.addEventListener("load", () => {
@@ -21,7 +23,7 @@ window.addEventListener("load", () => {
       const { outcome } = await deferredPrompt.userChoice;
       alert("user choice: " + outcome);
     } else {
-      alert('no `beforeinstallprompt`')
+      alert("no `beforeinstallprompt`");
     }
     deferredPrompt = null;
   });
