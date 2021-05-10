@@ -35,6 +35,7 @@ export const globalContextProvider = new (class GlobalContextProvider {
     this.decreaseSpiesCount = this.decreaseSpiesCount.bind(this);
     this.increaseTimeByOneMinute = this.increaseTimeByOneMinute.bind(this);
     this.decreaseTimeByOneMinute = this.decreaseTimeByOneMinute.bind(this);
+    this.toggleTheme = this.toggleTheme.bind(this);
   }
 
   private syncState() {
@@ -117,5 +118,14 @@ export const globalContextProvider = new (class GlobalContextProvider {
       this.state.timeInMinutes--;
       this.saveState();
     }
+  }
+
+  public toggleTheme() {
+    if (this.state.theme === "dark") {
+      this.state.theme = "light";
+    } else {
+      this.state.theme = "dark";
+    }
+    this.saveState();
   }
 })();

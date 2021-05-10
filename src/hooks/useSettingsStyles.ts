@@ -8,7 +8,6 @@ export const useSettingsStyles = createUseStyles({
     "& button": {
       background: "none",
       border: "none",
-      color: "gold",
     },
   },
 });

@@ -2,6 +2,7 @@ import { createUseStyles } from "react-jss";
 import PlayerSettings from "../components/PlayerSettings";
 import SpiesSettings from "../components/SpiesSettings";
 import TimerSettings from "../components/TimerSettings";
+import ThemeSettings from "../components/ThemeSettings";
 
 const useStyles = createUseStyles({
   container: {
@@ -30,7 +31,9 @@ export default function Main() {
         <TimerSettings />
       </div>
       <div>Category</div>
-      <div>Theme</div>
+      <div>
+        <ThemeSettings />
+      </div>
       <div>Start</div>
     </div>
   );

@@ -2,7 +2,7 @@ import { useContext, useEffect } from "react";
 import { GlobalContext } from "../data-providers/GlobalContext";
 
 export function useApplyTheme() {
-  const theme = useContext(GlobalContext).theme;
+  const { theme } = useContext(GlobalContext);
 
   useEffect(() => {
     if (theme === "dark") {
