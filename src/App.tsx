@@ -1,26 +1,33 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { useEffect, useState } from "react";
+import {
+  GlobalContext,
+  globalContextProvider,
+} from "./data-providers/GlobalContext";
+import Router from "./pages/Router";
 
-function App() {
+export default function App() {
+  const [globalContext, setGlobalContext] = useState(
+    globalContextProvider.getState()
+  );
+
+  useEffect(() => {
+    function listener() {
+      setGlobalContext(globalContextProvider.getState());
+    }
+
+    globalContextProvider.EventEmitter.addEventListener("change", listener);
+
+    return function () {
+      globalContextProvider.EventEmitter.removeEventListener(
+        "change",
+        listener
+      );
+    };
+  }, []);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <GlobalContext.Provider value={globalContext}>
+      <Router />
+    </GlobalContext.Provider>
   );
 }
-
-export default App;

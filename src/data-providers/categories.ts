@@ -152,7 +152,7 @@ export const CATEGORIES = {
     ],
   },
 
-  irans: {
+  iranCities: {
     name: "شهرستان‌های ایران",
     members: [
       "تهران",
@@ -345,7 +345,8 @@ export const CATEGORIES = {
       "ابوموسی",
     ],
   },
-  foods: {
+
+  food: {
     name: "غذا و خوراکی",
     members: [
       "قیمه سیب زمینی",
@@ -510,6 +511,7 @@ export const CATEGORIES = {
       "تمر هندی",
     ],
   },
+
   sports: {
     name: "ورزش و بازی",
     members: [
@@ -628,6 +630,7 @@ export const CATEGORIES = {
       "دو استقامت",
     ],
   },
+  
   countries: {
     name: "کشورها",
     members: [
