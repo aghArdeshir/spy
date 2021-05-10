@@ -13,7 +13,7 @@ const DEFAULT_GLOBAL_STATE: I_Global_Context = {
   spies: 1,
   timer: 2,
   category: "jobs",
-  theme: "light",
+  theme: "dark",
 };
 
 export const GlobalContext =
