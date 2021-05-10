@@ -1,4 +1,5 @@
 import { createContext } from "react";
+import { clone } from "lodash";
 
 type I_Global_Context = {
   players: number;
@@ -26,6 +27,9 @@ export const globalContextProvider = new (class GlobalContextProvider {
 
   constructor() {
     this.syncState();
+
+    this.increasePlayers = this.increasePlayers.bind(this);
+    this.decreasePlayers = this.decreasePlayers.bind(this);
   }
 
   private syncState() {
@@ -45,10 +49,12 @@ export const globalContextProvider = new (class GlobalContextProvider {
   }
 
   private saveState() {
+    this.globalContext = clone(this.globalContext);
     localStorage.setItem(
       this.localStorageKey,
       JSON.stringify(this.globalContext)
     );
+    this.EventEmitter.dispatchEvent(new Event("change"));
   }
 
   public getState() {
@@ -57,6 +63,16 @@ export const globalContextProvider = new (class GlobalContextProvider {
 
   public setState(state: I_Global_Context) {
     this.globalContext = state;
+    this.saveState();
+  }
+
+  public increasePlayers() {
+    this.globalContext.players++;
+    this.saveState();
+  }
+
+  public decreasePlayers() {
+    this.globalContext.players--;
     this.saveState();
   }
 })();
