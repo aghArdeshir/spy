@@ -5,7 +5,7 @@ import { Calculator } from "./Calculator";
 type I_Global_Context = {
   playersCount: number;
   spiesCount: number;
-  timer: number; // in minutes
+  timeInMinutes: number; // in minutes
   category: "jobs" | "iranCities" | "food" | "sports" | "countries";
   theme: "dark" | "light";
 };
@@ -13,7 +13,7 @@ type I_Global_Context = {
 const DEFAULT_GLOBAL_STATE: I_Global_Context = {
   playersCount: 5,
   spiesCount: 1,
-  timer: 2,
+  timeInMinutes: 2,
   category: "jobs",
   theme: "dark",
 };
@@ -33,6 +33,8 @@ export const globalContextProvider = new (class GlobalContextProvider {
     this.decreasePlayersCount = this.decreasePlayersCount.bind(this);
     this.increaseSpiesCount = this.increaseSpiesCount.bind(this);
     this.decreaseSpiesCount = this.decreaseSpiesCount.bind(this);
+    this.increaseTimeByOneMinute = this.increaseTimeByOneMinute.bind(this);
+    this.decreaseTimeByOneMinute = this.decreaseTimeByOneMinute.bind(this);
   }
 
   private syncState() {
@@ -101,6 +103,18 @@ export const globalContextProvider = new (class GlobalContextProvider {
 
     if (calculator.spiesCanBeDecreased) {
       this.state.spiesCount--;
+      this.saveState();
+    }
+  }
+
+  public increaseTimeByOneMinute() {
+    this.state.timeInMinutes++;
+    this.saveState();
+  }
+
+  public decreaseTimeByOneMinute() {
+    if (this.state.timeInMinutes > 1) {
+      this.state.timeInMinutes--;
       this.saveState();
     }
   }
