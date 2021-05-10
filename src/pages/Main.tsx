@@ -1,5 +1,6 @@
 import { createUseStyles } from "react-jss";
 import PlayerSettings from "../components/PlayerSettings";
+import SpiesSettings from "../components/SpiesSettings";
 
 const useStyles = createUseStyles({
   container: {
@@ -21,7 +22,9 @@ export default function Main() {
       <div>
         <PlayerSettings />
       </div>
-      <div>Spies</div>
+      <div>
+        <SpiesSettings />
+      </div>
       <div>Timer</div>
       <div>Category</div>
       <div>Theme</div>
