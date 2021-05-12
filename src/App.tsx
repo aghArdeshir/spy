@@ -1,7 +1,5 @@
-import {
-  GlobalContext,
-  useGlobalContext,
-} from "./data-providers/GlobalContext";
+import { GlobalContext } from "./data-providers/GlobalContext";
+import { useGlobalContext } from "./hooks/useGlobalContext";
 import Router from "./pages/Router";
 
 export default function App() {

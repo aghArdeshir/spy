@@ -1,4 +1,4 @@
-import { createContext, useEffect, useState } from "react";
+import { createContext } from "react";
 import { clone } from "lodash";
 import { Calculator } from "./Calculator";
 
@@ -129,26 +129,3 @@ export const globalContextProvider = new (class GlobalContextProvider {
     this.saveState();
   }
 })();
-
-export function useGlobalContext() {
-  const [globalContext, setGlobalContext] = useState(
-    globalContextProvider.getState()
-  );
-
-  useEffect(() => {
-    function listener() {
-      setGlobalContext(globalContextProvider.getState());
-    }
-
-    globalContextProvider.EventEmitter.addEventListener("change", listener);
-
-    return function () {
-      globalContextProvider.EventEmitter.removeEventListener(
-        "change",
-        listener
-      );
-    };
-  }, []);
-
-  return globalContext;
-}
