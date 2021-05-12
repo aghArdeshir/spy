@@ -13,5 +13,7 @@ export default function Router() {
   if (currentPage === "main") return <Main />;
   else if (currentPage === "assigner") return <Assigner />;
   else if (currentPage === "timer") return <Timer />;
-  else return <></>;
+  else {
+    throw new Error("Bad routing");
+  }
 }
