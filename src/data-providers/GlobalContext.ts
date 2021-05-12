@@ -1,4 +1,4 @@
-import { createContext } from "react";
+import { createContext, useEffect, useState } from "react";
 import { clone } from "lodash";
 import { Calculator } from "./Calculator";
 
@@ -24,7 +24,7 @@ export const GlobalContext =
 export const globalContextProvider = new (class GlobalContextProvider {
   private localStorageKey = "global_context";
   private state = DEFAULT_GLOBAL_STATE;
-  public EventEmitter = new EventTarget(); // TODO: type-guard it
+  public EventEmitter = new EventTarget(); // TODO: type-guard it, e.g. only provides `change` event
 
   constructor() {
     this.syncState();
@@ -129,3 +129,26 @@ export const globalContextProvider = new (class GlobalContextProvider {
     this.saveState();
   }
 })();
+
+export function useGlobalContext() {
+  const [globalContext, setGlobalContext] = useState(
+    globalContextProvider.getState()
+  );
+
+  useEffect(() => {
+    function listener() {
+      setGlobalContext(globalContextProvider.getState());
+    }
+
+    globalContextProvider.EventEmitter.addEventListener("change", listener);
+
+    return function () {
+      globalContextProvider.EventEmitter.removeEventListener(
+        "change",
+        listener
+      );
+    };
+  }, []);
+
+  return globalContext;
+}
