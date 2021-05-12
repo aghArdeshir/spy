@@ -1,16 +1,15 @@
 import { createContext } from "react";
-import { clone } from "lodash";
 import { Calculator } from "./Calculator";
 
 type I_Global_Context = {
   playersCount: number;
   spiesCount: number;
-  timeInMinutes: number; // in minutes
+  timeInMinutes: number;
   category: "jobs" | "iranCities" | "food" | "sports" | "countries";
   theme: "dark" | "light";
 };
 
-const DEFAULT_GLOBAL_STATE: I_Global_Context = {
+const DEFAULT_GLOBAL_CONTEXT: I_Global_Context = {
   playersCount: 5,
   spiesCount: 1,
   timeInMinutes: 2,
@@ -18,17 +17,16 @@ const DEFAULT_GLOBAL_STATE: I_Global_Context = {
   theme: "dark",
 };
 
-export const GlobalContext =
-  createContext<I_Global_Context>(DEFAULT_GLOBAL_STATE);
+export const GlobalContext = createContext<I_Global_Context>(
+  DEFAULT_GLOBAL_CONTEXT
+);
 
 export const globalContextProvider = new (class GlobalContextProvider {
   private localStorageKey = "global_context";
-  private state = DEFAULT_GLOBAL_STATE;
+  private state = DEFAULT_GLOBAL_CONTEXT;
   public EventEmitter = new EventTarget(); // TODO: type-guard it, e.g. only provides `change` event
 
   constructor() {
-    this.syncState();
-
     this.increasePlayersCount = this.increasePlayersCount.bind(this);
     this.decreasePlayersCount = this.decreasePlayersCount.bind(this);
     this.increaseSpiesCount = this.increaseSpiesCount.bind(this);
@@ -36,6 +34,8 @@ export const globalContextProvider = new (class GlobalContextProvider {
     this.increaseTimeByOneMinute = this.increaseTimeByOneMinute.bind(this);
     this.decreaseTimeByOneMinute = this.decreaseTimeByOneMinute.bind(this);
     this.toggleTheme = this.toggleTheme.bind(this);
+
+    this.syncState();
   }
 
   private syncState() {
@@ -45,17 +45,16 @@ export const globalContextProvider = new (class GlobalContextProvider {
       try {
         this.state = JSON.parse(valueAsString);
       } catch {
-        this.state = DEFAULT_GLOBAL_STATE;
+        this.state = DEFAULT_GLOBAL_CONTEXT;
         this.saveState();
       }
     } else {
-      this.state = DEFAULT_GLOBAL_STATE;
+      this.state = DEFAULT_GLOBAL_CONTEXT;
       this.saveState();
     }
   }
 
   private saveState() {
-    this.state = clone(this.state);
     localStorage.setItem(this.localStorageKey, JSON.stringify(this.state));
     this.EventEmitter.dispatchEvent(new Event("change"));
   }
