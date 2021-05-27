@@ -1,6 +1,14 @@
 import { createContext } from "react";
 import { Calculator } from "./Calculator";
 
+const CATEGORIES: I_Global_Context["category"][] = [
+  "jobs",
+  "iranCities",
+  "food",
+  "sports",
+  "countries",
+];
+
 type I_Global_Context = {
   playersCount: number;
   spiesCount: number;
@@ -33,6 +41,8 @@ export const globalContextProvider = new (class GlobalContextProvider {
     this.decreaseSpiesCount = this.decreaseSpiesCount.bind(this);
     this.increaseTimeByOneMinute = this.increaseTimeByOneMinute.bind(this);
     this.decreaseTimeByOneMinute = this.decreaseTimeByOneMinute.bind(this);
+    this.selectPreviousCategory = this.selectPreviousCategory.bind(this);
+    this.selectNextCategory = this.selectNextCategory.bind(this);
     this.toggleTheme = this.toggleTheme.bind(this);
 
     this.syncState();
@@ -117,6 +127,23 @@ export const globalContextProvider = new (class GlobalContextProvider {
       this.state.timeInMinutes--;
       this.saveState();
     }
+  }
+
+  selectPreviousCategory() {
+    const currentCategoryIndex = CATEGORIES.indexOf(this.state.category);
+    const resultCategoryIndex = (currentCategoryIndex + 1) % CATEGORIES.length;
+    this.state.category = CATEGORIES[resultCategoryIndex];
+    this.saveState();
+  }
+
+  selectNextCategory() {
+    const currentCategoryIndex = CATEGORIES.indexOf(this.state.category);
+
+    let resultCategoryIndex = currentCategoryIndex - 1;
+    if (resultCategoryIndex < 0) resultCategoryIndex = CATEGORIES.length - 1;
+
+    this.state.category = CATEGORIES[resultCategoryIndex];
+    this.saveState();
   }
 
   public toggleTheme() {

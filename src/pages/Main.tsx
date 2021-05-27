@@ -3,6 +3,7 @@ import PlayerSettings from "../components/PlayerSettings";
 import SpiesSettings from "../components/SpiesSettings";
 import TimerSettings from "../components/TimerSettings";
 import ThemeSettings from "../components/ThemeSettings";
+import CategorySettings from "../components/CategorySettings";
 
 const useStyles = createUseStyles({
   container: {
@@ -30,7 +31,9 @@ export default function Main() {
       <div>
         <TimerSettings />
       </div>
-      <div>Category</div>
+      <div>
+        <CategorySettings />
+      </div>
       <div>
         <ThemeSettings />
       </div>
