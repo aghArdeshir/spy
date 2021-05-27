@@ -5,7 +5,9 @@ export default function StartButton() {
 
   return (
     <div className={classes.container}>
-      <h1>Start</h1>
+      <button>
+        <h1>Start</h1>
+      </button>
     </div>
   );
 }

@@ -23,24 +23,12 @@ export default function Main() {
 
   return (
     <div className={classes.container}>
-      <div>
-        <PlayerSettings />
-      </div>
-      <div>
-        <SpiesSettings />
-      </div>
-      <div>
-        <TimerSettings />
-      </div>
-      <div>
-        <CategorySettings />
-      </div>
-      <div>
-        <ThemeSettings />
-      </div>
-      <div>
-        <StartButton />
-      </div>
+      <PlayerSettings />
+      <SpiesSettings />
+      <TimerSettings />
+      <CategorySettings />
+      <ThemeSettings />
+      <StartButton />
     </div>
   );
 }
