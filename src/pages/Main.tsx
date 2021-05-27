@@ -4,6 +4,7 @@ import SpiesSettings from "../components/SpiesSettings";
 import TimerSettings from "../components/TimerSettings";
 import ThemeSettings from "../components/ThemeSettings";
 import CategorySettings from "../components/CategorySettings";
+import StartButton from "../components/StartButton";
 
 const useStyles = createUseStyles({
   container: {
@@ -37,7 +38,9 @@ export default function Main() {
       <div>
         <ThemeSettings />
       </div>
-      <div>Start</div>
+      <div>
+        <StartButton />
+      </div>
     </div>
   );
 }
