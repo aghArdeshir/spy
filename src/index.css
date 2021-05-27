@@ -16,3 +16,7 @@ body.dark {
   background-color: black;
   color: gold;
 }
+
+button {
+  color: unset;
+}
